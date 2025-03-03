@@ -1,0 +1,50 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+.next
+.next/
+/out/
+.swc/
+
+
+# production
+/dist
+/build
+/out
+
+
+# misc
+.DS_Store
+*.pem
+
+#cache
+/.cache
+/.yarn/cache
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+next-env.d.ts
