@@ -1,17 +1,13 @@
-Full-Stack Project (Next.js + NestJS + Prisma + PostgreSQL)
+# Full-Stack Project (Next.js + NestJS + Prisma + PostgreSQL)
 
-📌 Project Description
-
+## 📌 Project Description
 This is a full-stack application built with:
+- **Frontend**: Next.js, TypeScript, Tailwind CSS, React Query
+- **Backend**: NestJS, Prisma, PostgreSQL
+- **DevOps**: Docker, Git
 
-Frontend: Next.js, TypeScript, Tailwind CSS, React Query
-
-Backend: NestJS, Prisma, PostgreSQL
-
-DevOps: Docker, Git
-
-📂 Repository Structure
-
+## 📂 Repository Structure
+```
 root/
 │── frontend/  # Next.js + Vite + Tailwind CSS
 │── backend/   # NestJS + Prisma + PostgreSQL
@@ -19,50 +15,56 @@ root/
 │── .gitignore
 │── README.md
 │── docker-compose.yml
+```
 
-🚀 How to Run the Project
+---
 
-1. Clone the Repository
+## 🚀 How to Run the Project
 
+### **1. Clone the Repository**
+```bash
 git clone <repo-url>
 cd <repo-folder>
+```
 
-2. Start the Application with Docker
-
+### **2. Start the Project with Docker**
+Ensure you have **Docker** installed and running. Then, execute:
+```bash
 docker-compose up --build
+```
+This will set up PostgreSQL, run migrations, and start both frontend and backend services.
 
-This will start PostgreSQL, the backend, and the frontend.
+### **3. Configure the Environment Variables**
+Create a `.env` file inside the `backend` folder and set up the database connection:
+```ini
+DATABASE_URL="postgresql://postgres:password@localhost:5432/ai-task-manager?schema=public"
+```
 
-The frontend will be available at http://localhost:3000
+### **4. Run Database Migrations**
+After starting the services, apply database migrations:
+```bash
+cd backend
+npx prisma migrate dev
+```
 
-The backend will be available at http://localhost:5000
+### **5. Access the Application**
+- **Frontend** runs at `http://localhost:3000`
+- **Backend** runs at `http://localhost:5000`
+- **PostgreSQL** is available at `localhost:5432`
 
-The database will be running on localhost:5432
+---
 
-3. Run Database Migrations
+## 🛠 Technologies Used
+### **Frontend:**
+- Next.js + TypeScript
+- Tailwind CSS
+- React Query
 
-docker-compose exec backend npx prisma migrate dev
+### **Backend:**
+- NestJS + Prisma
+- PostgreSQL
 
-This will initialize the database schema.
+### **DevOps:**
+- Docker
+- Git
 
-🛠 Technologies Used
-
-Frontend:
-
-Next.js + TypeScript
-
-Tailwind CSS
-
-React Query
-
-Backend:
-
-NestJS + Prisma
-
-PostgreSQL
-
-DevOps:
-
-Docker
-
-Git
