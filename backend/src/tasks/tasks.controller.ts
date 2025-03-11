@@ -27,10 +27,19 @@ export class TasksController {
   getAllTasks(
     @Req() req: AuthRequest,
     @Query('status') status?: TaskStatus,
+    @Query('title') title?: string,
+    @Query('sort') sort: 'asc' | 'desc' = 'desc',
     @Query('page') page: number = 1,
     @Query('limit') limit = 10,
   ) {
-    return this.taskService.getAllTasks(req.user!.id, status, page, limit);
+    return this.taskService.getAllTasks(
+      req.user!.id,
+      status,
+      title,
+      sort,
+      page,
+      limit,
+    );
   }
 
   @Get(':id')
