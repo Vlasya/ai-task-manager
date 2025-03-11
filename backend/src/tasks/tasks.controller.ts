@@ -6,42 +6,56 @@ import {
   Body,
   Patch,
   Delete,
+  UseGuards,
+  Req,
+  UsePipes,
+  ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { AuthRequest } from '../auth/types/auth-request.interface';
+import { UpdateTaskDto, CreateTaskDto } from './dto/task.dto';
 import { TaskStatus } from '@prisma/client';
 
 @Controller('tasks')
+@UseGuards(JwtAuthGuard)
 export class TasksController {
   constructor(private readonly taskService: TasksService) {}
 
   @Get()
-  getAllTasks() {
-    return this.taskService.getAllTasks();
+  getAllTasks(
+    @Req() req: AuthRequest,
+    @Query('status') status?: TaskStatus,
+    @Query('page') page: number = 1,
+    @Query('limit') limit = 10,
+  ) {
+    return this.taskService.getAllTasks(req.user!.id, status, page, limit);
   }
 
   @Get(':id')
-  getTaskById(@Param('id') id: string) {
-    return this.taskService.getTaskById(id);
+  getTaskById(@Req() req: AuthRequest, @Param('id') id: string) {
+    return this.taskService.getTaskById(id, req.user!.id);
   }
 
   @Post()
-  createTask(
-    @Body() body: { userId: string; title: string; description?: string },
-  ) {
-    return this.taskService.createTask(
-      body.userId,
-      body.title,
-      body.description ?? '',
-    );
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  createTask(@Req() req: AuthRequest, @Body() createTaskDto: CreateTaskDto) {
+    return this.taskService.createTask(req.user!.id, createTaskDto);
   }
 
   @Patch(':id')
-  updateTask(@Param('id') id: string, @Body('status') status: TaskStatus) {
-    return this.taskService.updateTask(id, status);
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  updateTask(
+    @Req() req: AuthRequest,
+    @Param('id') id: string,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ) {
+    return this.taskService.updateTask(id, updateTaskDto, req.user!.id);
   }
 
   @Delete(':id')
-  deleteTask(@Param('id') id: string) {
-    return this.taskService.deleteTask(id);
+  deleteTask(@Req() req: AuthRequest, @Param('id') id: string) {
+    return this.taskService.deleteTask(id, req.user!.id);
   }
 }
