@@ -12,7 +12,7 @@ import { AuthModule } from './auth/auth.module';
     TasksModule,
     PrismaModule,
     UsersModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
   ],
   controllers: [AppController],
